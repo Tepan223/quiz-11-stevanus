@@ -1,0 +1,32 @@
+[
+  {
+    "name": "STEVANUS",
+    "age": 16,
+    "className": "11 RPL",
+    "id": "1"
+  },
+  {
+    "name": "Abhirat",
+    "age": 20,
+    "className": "12 RPL",
+    "id": "2"
+  },
+  {
+    "name": "Kevin",
+    "age": 13,
+    "className": "10 AK",
+    "id": "3"
+  },
+  {
+    "name": "Pipin",
+    "age": 16,
+    "className": "11 RPL",
+    "id": "4"
+  },
+  {
+    "name": "Hugo",
+    "age": 16,
+    "className": "11 AK",
+    "id": "5"
+  }
+]
