@@ -1,5 +1,5 @@
 'use client';
-
+import "@ant-design/v5-patch-for-react-19";
 import React, { useEffect, useMemo, useState } from 'react';
 import {
   Table,
@@ -16,19 +16,7 @@ import {
 } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, ReloadOutlined } from '@ant-design/icons';
 
-/**
- * StudentsCRUD - halaman /pages/students/quiz.js
- *
- * Fitur:
- * - Fetch list dari /api/students
- * - Tambah / Edit / Hapus via modal & confirmation
- * - Search untuk filter nama (dinamis)
- * - Toggle "Simulate Error" untuk memaksa error (menampilkan message.error)
- * - Pesan sukses/error setelah tiap operasi
- *
- * Catatan: jika mau menyimpan ke file JSON (opsional +10 pts), implementasikan `fs` pada API route
- * (mis. /pages/api/students/index.js dan /pages/api/students/[id].js) untuk menulis ke disk.
- */
+
 
 export default function StudentsCRUD() {
   const [students, setStudents] = useState([]);
@@ -46,11 +34,8 @@ export default function StudentsCRUD() {
   const [searchText, setSearchText] = useState('');
   const [simulateError, setSimulateError] = useState(false);
 
-  // Helper to optionally simulate network/API error for testing UI feedback.
-  // When simulateError=true, a random fraction of operations will throw before making the request.
   const maybeSimulateError = (operationName = '') => {
     if (!simulateError) return;
-    // ~40% chance to simulate an error
     if (Math.random() < 0.4) {
       throw new Error(`Simulated error (${operationName})`);
     }
@@ -59,7 +44,6 @@ export default function StudentsCRUD() {
   const fetchStudents = async () => {
     setTableLoading(true);
     try {
-      // simulate error before fetch if toggle aktif
       maybeSimulateError('fetch');
 
       const res = await fetch('/api/students');
@@ -79,7 +63,6 @@ export default function StudentsCRUD() {
 
   useEffect(() => {
     fetchStudents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const openAddModal = () => {
@@ -155,7 +138,6 @@ export default function StudentsCRUD() {
   };
 
   const deleteStudent = async (id) => {
-    // mark as deleting
     setDeletingIds((prev) => new Set(prev).add(id));
     try {
       maybeSimulateError('delete');
@@ -191,7 +173,6 @@ export default function StudentsCRUD() {
         await createStudent(values);
       }
     } catch (err) {
-      // validation errors thrown by validateFields will be handled by Form UI
       console.log('Modal submit error', err);
     }
   };
@@ -252,7 +233,6 @@ export default function StudentsCRUD() {
     },
   ];
 
-  // Filtered students by search text (name). This is dynamic & case-insensitive.
   const filteredStudents = useMemo(() => {
     const q = (searchText || '').trim().toLowerCase();
     if (!q) return students;
